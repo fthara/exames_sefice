@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% load bootstrap4 %}
+
+{% block content %}
+<div class="text-right">
+    <a class="btn btn-success" href="busca_paciente" role="button">Voltar</a>
+</div>
+
+<form action='adiciona_paciente' method='POST'>
+    {% csrf_token %}
+    {{ form.as_p }}
+    {% buttons %}
+    <button type="submit" class="btn btn-primary">
+        Save
+    </button>
+    {% endbuttons %}
+</form>
+
+{% endblock %}

@@ -1,0 +1,32 @@
+
+<div class="card card-body">
+<div class="container">
+    <form method="get">
+    <div class="well">
+        <h4 style="margin-top: 0">Filtro</h4>
+        <div class="row">
+        <div class="form-group col-sm-4 col-md-3">
+            {{ filter.form.rh.label_tag }}
+            {% render_field filter.form.rh class="form-control" %}
+        </div>
+        <div class="form-group col-sm-4 col-md-3">
+            {{ filter.form.nome.label_tag }}
+            {% render_field filter.form.nome class="form-control" %}
+        </div>
+        <button type=submit class="btn btn-primary">Search</button>
+        </div>
+    </div>
+    </form>
+</div>
+</div>
+
+
+
+<div class="card card-body">
+    <div class="container">
+      <form>
+          {{ filter.form|bootstrap }}
+          <button type=submit class="btn btn-primary">Search</button>
+      </form>
+    </div>
+  </div>

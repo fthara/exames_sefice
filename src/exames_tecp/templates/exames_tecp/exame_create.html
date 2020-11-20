@@ -1,0 +1,561 @@
+{% extends 'base.html' %}
+
+{% load widget_tweaks %}
+{% load bootstrap4 %}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+{% bootstrap_messages %}
+
+{% block content %}
+<form action='adiciona_tecp_p1' method='POST' enctype="multipart/form-data">
+  {% csrf_token %}
+  <!-- Upload pdf 
+  <div class="card card-body">
+    <div class="container-fluid">
+      <div class="well">
+        {{ form.pdf }}
+      </div>
+    </div>
+  </div>
+  -->
+  <!-- Dados do Paciente -->
+  <div class="card card-body">
+    <div class="container-fluid">
+      <div class="well">
+        <h5 style="margin-top: 0">Dados Paciente</h5>
+          <div class="form-row">
+            <div class="form-group col-sm-4 col-md-6">
+              {{ form.paciente.label_tag }}
+              {% render_field form.paciente class="form-control" %}
+            </div>
+            <div class="form-group col-sm-4 col-md-3">
+              {{ form.data_exame.label_tag }}
+              {% render_field form.data_exame class="form-control" %}
+            </div>
+            <div class="form-group col-sm-4 col-md-3">
+              {{ form.peso.label_tag }}
+              {% render_field form.peso class="form-control" %}
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-sm-4 col-md-3">
+              {{ form.altura.label_tag }}
+              {% render_field form.altura class="form-control" %}
+            </div>
+            <div class="form-group col-sm-4 col-md-3">
+              {{ form.IMC.label_tag }}
+              {% render_field form.IMC class="form-control" %}
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dados Iniciais do Teste-->
+  <div class="card card-body">
+    <div class="container-fluid">
+        <div class="well">
+          <h5 style="text-align: center">TESTE DE EXERCICIO CARDIORRESPIRATÓRIO INCREMENTAL</h5>
+            <div class="form-group row align-items-center d-flex justify-content-center">
+              <div class="col-sm-3 text-right"> 
+                {{ form.Delta_VO2_W.label_tag }}
+              </div>
+              <div class="col-sm-3">
+                {% render_field form.Delta_VO2_W class="form-control" %}
+              </div>
+              <div class="col-sm-2 text-right">
+                {{ form.VE_VVM.label_tag }}
+              </div>
+              <div class="col-sm-3">
+                {% render_field form.VE_VVM class="form-control" %}
+              </div>
+            </div>
+            <div class="form-group row align-items-center d-flex justify-content-center">
+              <div class="col-sm-3 text-right">
+                {{ form.Delta_VE_VCO2.label_tag }}
+              </div>
+              <div class="col-sm-3">
+                {% render_field form.Delta_VE_VCO2 class="form-control" %}
+              </div>
+              <div class="col-sm-2 text-right">
+                {{ form.SpO2.label_tag }}
+              </div>
+              <div class="col-sm-3">
+                {% render_field form.SpO2 class="form-control" %}
+              </div>
+            </div>
+            <div class="form-group row align-items-center d-flex justify-content-center">
+              <div class="col-sm-3 text-right">
+                {{ form.Delta_FC_VO2.label_tag }}
+              </div>
+              <div class="col-sm-3">
+                {% render_field form.Delta_FC_VO2 class="form-control" %}
+              </div>
+              <div class="col-sm-2 text-right">
+                {{ form.Borg.label_tag }}
+              </div>
+              <div class="col-sm-3">
+                {% render_field form.Borg class="form-control" %}
+              </div>
+            </div>
+        </div>
+    </div>
+  </div>
+
+
+  <!-- Dados Exercício -->
+  <div class="card card-body">
+    <div class="container-fluid">
+        <div class="well">
+          <h5 style="text-align: center">DADOS DO TESTE</h5>
+
+            <!-- Cabeçalho -->
+            <div class="form-group row">
+              <div class="col-sm-2"></div>
+              <div class="col-sm-2 text-center">
+                <p style="font-size:14px"><b><u>Rest</u></b></p>
+              </div>
+              <div class="col-sm-2 text-center">
+                <p style="font-size:14px"><b><u>AT</u></b></p>
+              </div>
+              <div class="col-sm-2 text-center">
+                <p style="font-size:14px"><b><u>VO2 Max</u></b></p>
+              </div>
+              <div class="col-sm-2 text-center">
+                <p style="font-size:14px"><b><u>Pred</u></b></p>
+              </div>
+              <div class="col-sm-2 text-center">
+                <p style="font-size:14px"><b><u>VO2 Max/Pred (%)</u></b></p>
+              </div>
+            </div>
+
+            <!-- Time(min) -->
+            <div class="form-group row">
+              <div class="col-sm-2 text-left"> 
+                <p style="font-size:14px"><b>Time(min)</b></p>
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.Time_Rest class="form-control" %}
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.Time_AT class="form-control" %}
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.Time_VO2Max class="form-control" %}
+              </div>
+            </div>
+
+            <!-- Work(Watts) -->
+            <div class="form-group row">
+              <div class="col-sm-2 text-left"> 
+                <p style="font-size:14px"><b>Work(Watts)</b></p>
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.Work_Rest class="form-control" %}
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.Work_AT class="form-control" %}
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.Work_VO2Max class="form-control" %}
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.Work_Pred class="form-control" %}
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.Work_VO2MaxPred class="form-control" %}
+              </div>
+            </div>
+
+            <!-- Ex Time (min) -->
+            <div class="form-group row">
+              <div class="col-sm-2 text-left"> 
+                <p style="font-size:14px"><b>Ex Time (min)</b></p>
+              </div>
+              <div class="col-sm-2"></div>
+              <div class="col-sm-2">
+                {% render_field form.Ex_Time_AT class="form-control" %}
+                {{ form.Ex_Time_AT.errrors }}
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.Ex_Time_VO2Max class="form-control" %}
+              </div>
+            </div>    
+
+            <!-- METABOLISMO -->
+            <div class="form-group row">
+              <div class="col-sm-3 text-left"> 
+                <p style="font-size:14px"><b>--METABOLISMO--</b></p>
+              </div>
+            </div>
+
+            <!-- VO2 (mL/min) -->
+            <div class="form-group row">
+              <div class="col-sm-2 text-left"> 
+                <p style="font-size:14px"><b>VO2 (mL/min)</b></p>
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.VO2_Rest_ml_min class="form-control" %}
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.VO2_AT_ml_min class="form-control" %}
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.VO2_VO2Max_ml_min class="form-control" %}
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.VO2_Pred_ml_min class="form-control" %}
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.VO2_VO2MaxPred_ml_min class="form-control" %}
+              </div>
+            </div>
+
+            <!-- VO2 (mL/kg/min) -->
+            <div class="form-group row">
+              <div class="col-sm-2 text-left"> 
+                <p style="font-size:14px"><b>VO2 (mL/kg/min)</b></p>
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.VO2_Rest_ml_kg_min class="form-control" %}
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.VO2_AT_ml_kg_min class="form-control" %}
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.VO2_VO2Max_ml_kg_min class="form-control" %}
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.VO2_Pred_ml_kg_min class="form-control" %}
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.VO2_VO2MaxPred_ml_kg_min class="form-control" %}
+              </div>
+            </div>
+
+            <!-- VCO2 (mL/min) -->
+            <div class="form-group row">
+              <div class="col-sm-2 text-left"> 
+                <p style="font-size:14px"><b>VCO2 (mL/min)</b></p>
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.VCO2_Rest class="form-control" %}
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.VCO2_AT class="form-control" %}
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.VCO2_VO2Max class="form-control" %}
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.VCO2_Pred class="form-control" %}
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.VCO2_VO2MaxPred class="form-control" %}
+              </div>
+            </div>
+
+            <!-- RER -->
+            <div class="form-group row">
+              <div class="col-sm-2 text-left"> 
+                <p style="font-size:14px"><b>RER</b></p>
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.RER_Rest class="form-control" %}
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.RER_AT class="form-control" %}
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.RER_VO2Max class="form-control" %}
+              </div>
+            </div>
+
+            <!-- VENTILAÇÃO -->
+            <div class="form-group row">
+              <div class="col-sm-3 text-left"> 
+                <p style="font-size:14px"><b>--VENTILAÇÃO--</b></p>
+              </div>
+            </div>
+            
+            <!-- VE BTPS (L/min) -->
+            <div class="form-group row">
+              <div class="col-sm-2 text-left"> 
+                <p style="font-size:14px"><b>VE BTPS (L/min)</b></p>
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.VE_BTPS_Rest class="form-control" %}
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.VE_BTPS_AT class="form-control" %}
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.VE_BTPS_VO2Max class="form-control" %}
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.VE_BTPS_Pred class="form-control" %}
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.VE_BTPS_VO2MaxPred class="form-control" %}
+              </div>
+            </div>
+
+            <!-- Vt BTPS (L) -->
+            <div class="form-group row">
+              <div class="col-sm-2 text-left"> 
+                <p style="font-size:14px"><b>Vt BTPS (L)</b></p>
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.Vt_BTPS_Rest class="form-control" %}
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.Vt_BTPS_AT class="form-control" %}
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.Vt_BTPS_VO2Max class="form-control" %}
+              </div>
+            </div>
+
+            <!-- RR (br/min) -->
+            <div class="form-group row">
+              <div class="col-sm-2 text-left"> 
+                <p style="font-size:14px"><b>RR (br/min)</b></p>
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.RR_Rest class="form-control" %}
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.RR_AT class="form-control" %}
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.RR_VO2Max class="form-control" %}
+              </div>
+            </div>
+
+            <!-- VE/VO2 -->
+            <div class="form-group row">
+              <div class="col-sm-2 text-left"> 
+                <p style="font-size:14px"><b>VE/VO2</b></p>
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.VE_VO2_Rest class="form-control" %}
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.VE_VO2_AT class="form-control" %}
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.VE_VO2_VO2Max class="form-control" %}
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.VE_VO2_Pred class="form-control" %}
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.VE_VO2_VO2MaxPred class="form-control" %}
+              </div>
+            </div>
+
+            <!-- VE/VCO2 -->
+            <div class="form-group row">
+              <div class="col-sm-2 text-left"> 
+                <p style="font-size:14px"><b>VE/VCO2</b></p>
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.VE_VCO2_Rest class="form-control" %}
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.VE_VCO2_AT class="form-control" %}
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.VE_VCO2_VO2Max class="form-control" %}
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.VE_VCO2_Pred class="form-control" %}
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.VE_VCO2_VO2MaxPred class="form-control" %}
+              </div>
+            </div>
+
+            <!-- Ti/Ttot -->
+            <div class="form-group row">
+              <div class="col-sm-2 text-left"> 
+                <p style="font-size:14px"><b>Ti/Ttot</b></p>
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.Ti_Ttot_Rest class="form-control" %}
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.Ti_Ttot_AT class="form-control" %}
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.Ti_Ttot_VO2Max class="form-control" %}
+              </div>
+            </div>
+
+            <!-- Ti (sec) -->
+            <div class="form-group row">
+              <div class="col-sm-2 text-left"> 
+                <p style="font-size:14px"><b>Ti (sec)</b></p>
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.Ti_Rest class="form-control" %}
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.Ti_AT class="form-control" %}
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.Ti_VO2Max class="form-control" %}
+              </div>
+            </div>
+
+            <!-- Te (sec) -->
+            <div class="form-group row">
+              <div class="col-sm-2 text-left"> 
+                <p style="font-size:14px"><b>Te (sec)</b></p>
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.Te_Rest class="form-control" %}
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.Te_AT class="form-control" %}
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.Te_VO2Max class="form-control" %}
+              </div>
+            </div>
+
+            <!-- Vt/IC (%) -->
+            <div class="form-group row">
+              <div class="col-sm-3 text-left"> 
+                <p style="font-size:14px"><b>--Vt/IC (%)--</b></p>
+              </div>
+            </div>
+
+            <!-- CARDIOVASCULAR -->
+            <div class="form-group row">
+              <div class="col-sm-3 text-left"> 
+                <p style="font-size:14px"><b>--CARDIOVASCULAR--</b></p>
+              </div>
+            </div>
+
+            <!-- HeartRate (BPM) -->
+            <div class="form-group row">
+              <div class="col-sm-2 text-left"> 
+                <p style="font-size:14px"><b>HeartRate (BPM)</b></p>
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.HeartRate_Rest class="form-control" %}
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.HeartRate_AT class="form-control" %}
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.HeartRate_VO2Max class="form-control" %}
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.HeartRate_Pred class="form-control" %}
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.HeartRate_VO2MaxPred class="form-control" %}
+              </div>
+            </div>
+
+            <!-- VO2/HR (mL/beat) -->
+            <div class="form-group row">
+              <div class="col-sm-2 text-left"> 
+                <p style="font-size:14px"><b>VO2/HR (mL/beat)</b></p>
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.VO2_HR_Rest class="form-control" %}
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.VO2_HR_AT class="form-control" %}
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.VO2_HR_VO2Max class="form-control" %}
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.VO2_HR_Pred class="form-control" %}
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.VO2_HR_VO2MaxPred class="form-control" %}
+              </div>
+            </div>
+
+            <!-- sysBP (mmHg) -->
+            <div class="form-group row">
+              <div class="col-sm-3 text-left"> 
+                <p style="font-size:14px"><b>sysBP (mmHg)</b></p>
+              </div>
+            </div>
+
+            <!-- diaBP (mmHg) -->
+            <div class="form-group row">
+              <div class="col-sm-3 text-left"> 
+                <p style="font-size:14px"><b>diaBP (mmHg)</b></p>
+              </div>
+            </div>
+
+            <!-- TROCAS GASOSAS -->
+            <div class="form-group row">
+              <div class="col-sm-3 text-left"> 
+                <p style="font-size:14px"><b>--TROCAS GASOSAS--</b></p>
+              </div>
+            </div>
+
+            <!-- PETO2 (mmHg) -->
+            <div class="form-group row">
+              <div class="col-sm-2 text-left"> 
+                <p style="font-size:14px"><b>PETO2 (mmHg)</b></p>
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.PETO2_Rest class="form-control" %}
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.PETO2_AT class="form-control" %}
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.PETO2_VO2Max class="form-control" %}
+              </div>
+            </div>
+
+            <!-- PETCO2 (mmHg) -->
+            <div class="form-group row">
+              <div class="col-sm-2 text-left"> 
+                <p style="font-size:14px"><b>PETCO2 (mmHg)</b></p>
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.PETCO2_Rest class="form-control" %}
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.PETCO2_AT class="form-control" %}
+              </div>
+              <div class="col-sm-2">
+                {% render_field form.PETCO2_VO2Max class="form-control" %}
+              </div>
+            </div>
+        </div>
+    </div>
+  </div>
+  <!-- Botão Salvar-->
+  <br/>
+  <button type="submit" class="btn btn-primary">Salvar</button>
+</form>
+
+{% if form.errors %}
+    {% for field in form %}
+        {% for error in field.errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+    {% endfor %}
+    {% for error in form.non_field_errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+    {% endfor %}
+{% endif %}
+
+
+{% endblock %}
